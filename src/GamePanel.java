@@ -35,19 +35,29 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setBackground(Color.black);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
+
         startGame();
 
     }
 
     public void startGame(){
         // creates a new apple at start
-        // newApple();
+        newApple();
 
         running = true;
 
         // set timer to 75 and start
         timer = new Timer(delay,this);
         timer.start();
+    }
+    public void newApple() {
+        // places apple random
+        appleX = random.nextInt((int)(screenWidth/unit_size))*unit_size;
+        appleY = random.nextInt((int)(screenHeight/unit_size))*unit_size;
+    }
+    public void paintComponent (Graphics g) {
+        super.paintComponent(g);
+        gameplan(g);
     }
 
     public void gameplan(Graphics graphics){
@@ -58,7 +68,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
 
         // draws when game is running
-        if(running){
+        if(running) {
             // draws apple
             graphics.setColor(Color.red);
             graphics.fillOval(appleX, appleY, unit_size, unit_size);
@@ -72,20 +82,31 @@ public class GamePanel extends JPanel implements ActionListener {
                     graphics.setColor(Color.cyan);
                     graphics.fillRect(x[i], y[i], unit_size, unit_size);
                 }
+                // Score text
+                graphics.setColor(Color.red);
+                graphics.setFont(new Font("comic sans", Font.BOLD, 35));
+                FontMetrics metrics = getFontMetrics(graphics.getFont());
+                graphics.drawString("Score: " + applesEaten, (screenWidth - metrics.stringWidth("Score: " + applesEaten)) / 2, graphics.getFont().getSize());
             }
-            // Score text
-            graphics.setColor(Color.red);
-            graphics.setFont(new Font("comic sans", Font.BOLD, 35));
-            FontMetrics metrics = getFontMetrics(graphics.getFont());
-            graphics.drawString("Score: " + applesEaten, (screenWidth - metrics.stringWidth("Score: " + applesEaten))/2, graphics.getFont().getSize());
         }
         else {
-            //gameOver(graphics);
+            gameOver(graphics);
         }
     }
 
-    public void gameOver(){
+    
 
+    public void gameOver(Graphics graphics){
+        // Score text
+        graphics.setColor(Color.red);
+        graphics.setFont(new Font("comic sans", Font.BOLD, 35));
+        FontMetrics metrics = getFontMetrics(graphics.getFont());
+        graphics.drawString("Score: " + applesEaten, (screenWidth - metrics.stringWidth("Score: " + applesEaten))/2, graphics.getFont().getSize());
+        //Game Over text
+        graphics.setColor(Color.red);
+        graphics.setFont(new Font("comic sans", Font.BOLD, 75));
+        FontMetrics metrics2 = getFontMetrics(graphics.getFont());
+        graphics.drawString("Game Over", (screenWidth - metrics2.stringWidth("Game Over"))/2, screenHeight/2);
     }
 
     @Override
