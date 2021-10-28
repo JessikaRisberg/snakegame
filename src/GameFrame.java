@@ -15,6 +15,4 @@ public class GameFrame extends JFrame {
             // Puts the frame in the middle of the screen
             this.setLocationRelativeTo(null);
         }
-
-
 }
