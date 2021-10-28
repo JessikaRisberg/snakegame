@@ -15,13 +15,26 @@ public class GamePanel extends JPanel implements ActionListener {
     Timer timer;
     Random random;
 
+    // Holds the coordinates for the snakes body parts
+    final int x[] = new int[game_units];
+    final int y[] = new int[game_units];
+    int bodyParts = 10;
+    int applesEaten;
+
+    // Direction for apples
+    int appleX;
+    int appleY;
+
+    // Start direction for snake
+    char direction = 'R';
+
     public GamePanel(){
     random = new Random();
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setFocusable(true);
-        // this.addKeyListener(new MyKeyAdapter());
+        this.addKeyListener(new MyKeyAdapter());
         startGame();
 
     }
@@ -35,6 +48,40 @@ public class GamePanel extends JPanel implements ActionListener {
         // set timer to 75 and start
         timer = new Timer(delay,this);
         timer.start();
+    }
+
+    public void gameplan(Graphics graphics){
+        // draw the gamepanel
+        for (int i = 0; i < screenHeight/unit_size; i++){
+            graphics.drawLine(i*unit_size, 0, i*unit_size, screenHeight); // x-axel
+            graphics.drawLine(0, i*unit_size, screenWidth, i*unit_size); // Y-axel
+        }
+
+        // draws when game is running
+        if(running){
+            // draws apple
+            graphics.setColor(Color.red);
+            graphics.fillOval(appleX, appleY, unit_size, unit_size);
+
+            // draw snake
+            for (int i = 0; i < bodyParts; i++) {
+                if (i == 0) {
+                    graphics.setColor(Color.CYAN);
+                    graphics.fillRect(x[i], y[i], unit_size, unit_size);
+                } else {
+                    graphics.setColor(Color.cyan);
+                    graphics.fillRect(x[i], y[i], unit_size, unit_size);
+                }
+            }
+            // Score text
+            graphics.setColor(Color.red);
+            graphics.setFont(new Font("comic sans", Font.BOLD, 35));
+            FontMetrics metrics = getFontMetrics(graphics.getFont());
+            graphics.drawString("Score: " + applesEaten, (screenWidth - metrics.stringWidth("Score: " + applesEaten))/2, graphics.getFont().getSize());
+        }
+        else {
+            //gameOver(graphics);
+        }
     }
 
     public void gameOver(){
