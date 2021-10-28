@@ -93,7 +93,35 @@ public class GamePanel extends JPanel implements ActionListener {
             gameOver(graphics);
         }
     }
+    public void checkCollision() {
+        // checks if snake collied with itself
+        for (int i = bodyParts; i > 0; i--){
+            if ((x[0] == x[i]) && (y[0] == y[i])){
+                running = false;
+            }
+        }
+        // Checks if snake collied with left border
+        if (x[0] < 0){
+            running = false;
+        }
+        // checks if snake collied with right border
+        if (x[0] > screenWidth){
+            running = false;
+        }
+        // checks if snake collied with top border
+        if (y[0] < 0){
+            running = false;
+        }
+        // checks if snake collied with bottom border
+        if (y[0] > screenHeight){
+            running = false;
+        }
 
+        // stopp timer
+        if (!running) {
+            timer.stop();
+        }
+    }
     
 
     public void gameOver(Graphics graphics){
@@ -111,6 +139,9 @@ public class GamePanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+            if (running){
+                checkCollision();
+            }
+            repaint();
     }
 }
