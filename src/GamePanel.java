@@ -3,14 +3,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
-public class GamePanel extends JPanel implements ActionListener {
+public class GamePanel extends JPanel implements ActionListener, ISnakeParameter {
     // Panel set up
     static final int screenWidth = 600;
     static final int screenHeight = 600;
     static final int unit_size = 25;
     static final int game_units = (screenHeight*screenWidth)/unit_size;
     static final int delay = 75;
-
     boolean running = false;
     Timer timer;
     Random random;
@@ -25,9 +24,6 @@ public class GamePanel extends JPanel implements ActionListener {
     int appleX;
     int appleY;
 
-    // Start direction for snake
-    char direction = 'R';
-
     public GamePanel(){
     random = new Random();
 
@@ -35,17 +31,13 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setBackground(Color.black);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
-
         startGame();
-
     }
-
     public void startGame(){
         // creates a new apple at start
         newApple();
 
         running = true;
-
         // set timer to 75 and start
         timer = new Timer(delay,this);
         timer.start();
@@ -59,7 +51,6 @@ public class GamePanel extends JPanel implements ActionListener {
         super.paintComponent(g);
         gameplan(g);
     }
-
     public void gameplan(Graphics graphics){
         // draws when game is running
         if(running) {
@@ -94,23 +85,18 @@ public class GamePanel extends JPanel implements ActionListener {
                 running = false;
             }
         }
-        // Checks if snake collied with left border
         if (x[0] < 0){
-            running = false;
+            running = false; // Checks if snake collied with left border
         }
-        // checks if snake collied with right border
         if (x[0] > screenWidth){
-            running = false;
+            running = false; // checks if snake collied with right border
         }
-        // checks if snake collied with top border
         if (y[0] < 0){
-            running = false;
+            running = false; // checks if snake collied with top border
         }
-        // checks if snake collied with bottom border
         if (y[0] > screenHeight){
-            running = false;
+            running = false; // checks if snake collied with bottom border
         }
-
         // stopp timer
         if (!running) {
             timer.stop();
@@ -156,7 +142,6 @@ public class GamePanel extends JPanel implements ActionListener {
         FontMetrics metrics2 = getFontMetrics(graphics.getFont());
         graphics.drawString("Game Over", (screenWidth - metrics2.stringWidth("Game Over"))/2, screenHeight/2);
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
             if (running){
@@ -166,35 +151,5 @@ public class GamePanel extends JPanel implements ActionListener {
             }
             repaint();
     }
-
-    public class MyKeyAdapter extends KeyAdapter{
-        @Override
-        public void keyPressed(KeyEvent e){
-            // steer the snake
-            switch (e.getKeyCode()){
-                case KeyEvent.VK_LEFT:
-                    if (direction != 'R'){
-                        direction = 'L';
-                    }
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    if (direction != 'L'){
-                        direction = 'R';
-                    }
-                    break;
-                case KeyEvent.VK_UP:
-                    if (direction != 'D'){
-                        direction = 'U';
-                    }
-                    break;
-                case KeyEvent.VK_DOWN:
-                    if (direction != 'U'){
-                        direction = 'D';
-                    }
-                    break;
-            }
-        }
-    }
 }
-
 
