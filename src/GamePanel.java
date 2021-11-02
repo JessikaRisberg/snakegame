@@ -20,16 +20,14 @@ public class GamePanel extends JPanel implements ActionListener {
     final int y[] = new int[game_units];
     int bodyParts = 6; // snake length at start
     int applesEaten;
-
-    // Direction for apples
-    int appleX;
-    int appleY;
+    int appleX; // x coordinate for apple
+    int appleY; // y coordinate for apple
 
     char direction = 'R'; // Start direction for snake
 
     public GamePanel(){
     random = new Random();
-
+        // set up for panel
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setFocusable(true);
@@ -38,7 +36,6 @@ public class GamePanel extends JPanel implements ActionListener {
         startGame();
 
     }
-
     public void startGame(){
         // creates a new apple at start
         newApple();
@@ -51,14 +48,13 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     public void newApple() {
         // places apple random
-        appleX = random.nextInt((int)(screenWidth/unit_size))*unit_size;
-        appleY = random.nextInt((int)(screenHeight/unit_size))*unit_size;
+        appleX = random.nextInt(screenWidth/unit_size)*unit_size;
+        appleY = random.nextInt(screenHeight/unit_size)*unit_size;
     }
     public void paintComponent (Graphics g) {
         super.paintComponent(g);
         gameplan(g);
     }
-
     public void gameplan(Graphics graphics){
         // draws when game is running
         if(running) {
@@ -109,8 +105,7 @@ public class GamePanel extends JPanel implements ActionListener {
         if (y[0] > screenHeight){
             running = false;
         }
-
-        // stopp timer
+        // stopp timer when not running
         if (!running) {
             timer.stop();
         }
@@ -137,6 +132,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
     public void checkApple() {
+        // checks if snake gets apple
         if((x[0] == appleX) && (y[0] == appleY)){
             bodyParts++;
             applesEaten++;
@@ -155,7 +151,6 @@ public class GamePanel extends JPanel implements ActionListener {
         FontMetrics metrics2 = getFontMetrics(graphics.getFont());
         graphics.drawString("Game Over", (screenWidth - metrics2.stringWidth("Game Over"))/2, screenHeight/2);
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
             if (running){
@@ -166,7 +161,7 @@ public class GamePanel extends JPanel implements ActionListener {
             repaint();
     }
 
-    public class MyKeyAdapter extends KeyAdapter{
+    public class MyKeyAdapter extends KeyAdapter{ // Key Adapter abstract class.
         @Override
         public void keyPressed(KeyEvent e){
             // steer the snake
