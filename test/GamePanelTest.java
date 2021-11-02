@@ -19,7 +19,7 @@ class GamePanelTest {
         // result
         assertTrue(running);
     }
-    
+
     @Test
     void checkCollisionRigthBorder() {
         // set up
