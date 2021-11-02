@@ -18,15 +18,14 @@ public class GamePanel extends JPanel implements ActionListener {
     // Holds the coordinates for the snakes body parts
     final int x[] = new int[game_units];
     final int y[] = new int[game_units];
-    int bodyParts = 10;
+    int bodyParts = 6; // snake length at start
     int applesEaten;
 
     // Direction for apples
     int appleX;
     int appleY;
 
-    // Start direction for snake
-    char direction = 'R';
+    char direction = 'R'; // Start direction for snake
 
     public GamePanel(){
     random = new Random();
