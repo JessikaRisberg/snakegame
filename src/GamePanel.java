@@ -8,8 +8,8 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int screenWidth = 600;
     static final int screenHeight = 600;
     static final int unit_size = 25;
-    static final int game_units = (screenHeight*screenWidth)/unit_size;
-    static final int delay = 75;
+    static final int game_units = (screenHeight*screenWidth)/unit_size; // make snake and apple a size according to screen width and height
+    static final int delay = 75; // game time
 
     boolean running = false;
     Timer timer;

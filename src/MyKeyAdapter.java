@@ -5,6 +5,7 @@ public class MyKeyAdapter extends KeyAdapter{
     @Override
     public void keyPressed(KeyEvent e){
         // steer the snake
+        
     }
 
 
