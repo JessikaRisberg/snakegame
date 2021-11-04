@@ -9,20 +9,19 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int screenHeight = 600;
     static final int unit_size = 25;
     static final int game_units = (screenHeight*screenWidth)/unit_size; // make snake and apple a size according to screen width and height
-    static final int delay = 75; // game time
+    static final int delay = 75; // set max time for play time
 
     boolean running = false;
-    Timer timer;
+    Timer timer; // timer for game time
     Random random;
 
     // Holds the coordinates for the snakes body parts
     final int x[] = new int[game_units];
     final int y[] = new int[game_units];
     int bodyParts = 6; // snake length at start
-    int applesEaten;
+    int applesEaten; // points for apples
     int appleX; // x coordinate for apple
     int appleY; // y coordinate for apple
-
     char direction = 'R'; // Start direction for snake
 
     public GamePanel(){
@@ -40,7 +39,7 @@ public class GamePanel extends JPanel implements ActionListener {
         // creates a new apple at start
         newApple();
 
-        running = true;
+        running = true; // start running the game
 
         // set timer to 75 and start
         timer = new Timer(delay,this);
@@ -110,7 +109,7 @@ public class GamePanel extends JPanel implements ActionListener {
             timer.stop();
         }
     }
-    public void move() {
+    public void move() { // movement
         for (int i = bodyParts; i > 0; i--){
             x[i] = x[i-1];
             y[i] = y[i-1];
